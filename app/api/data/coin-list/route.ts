@@ -10,8 +10,6 @@ const handler = async () => {
       `https://api.coingecko.com/api/v3/coins/list`
     );
 
-    // console.log({ data: response.data });
-
     return new Response(JSON.stringify(response.data), { status: 200 });
   } catch (error) {
     console.error(`Error fetching coin list for:`, error);

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { connectToDatabase } from "@/utils/database";
 import CryptoData from "@/models/cryptoData";
 import { symbolsList } from "@/utils/constants";
@@ -25,14 +25,16 @@ const handler = async () => {
       await CryptoData.create(data);
       return "Data fetched and stored successfully";
     } catch (error) {
-      console.error(`Error fetching data for ${symbol}:`, error.message);
+      console.error(
+        `Error fetching data for ${symbol}:`,
+        (error as AxiosError).message
+      );
       return new Response(`Error fetching data for ${symbol}`, { status: 500 });
     }
   });
 
   try {
     const resolvedPromises = await Promise.all(promises);
-    // console.log({ resolvedPromises });
   } catch (error) {
     console.error("Error fetching data:", error);
   }
